@@ -3,6 +3,8 @@ import './App.css';
 import Note from './Note/Note';
 import Nav from './Nav/Nav';
 import NoteForm from './NoteForm/NoteForm';
+import DB_CONFIG from './Config/config';
+import firebase from 'firebase';
 
 export default class App extends Component {
 
@@ -10,11 +12,12 @@ export default class App extends Component {
     super(props);
     this.addNote = this.addNote.bind(this);
 
+    this.app = firebase.initializeApp(DB_CONFIG);
+    this.db = this.app.database().ref().child('notes');
+
     // Setting up the state of the component
     this.state = {
-      notes: [
-          { id: 1, noteContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-        ],
+      notes: [],
       }
     }
 
@@ -36,20 +39,13 @@ export default class App extends Component {
         <Nav />
 
         <div className="notesBody">
-          <div className="notesList">
-            <h3>Note #1</h3>
-          </div>
-
-          <div className="note">
             {
               this.state.notes.map( (note) => {
                 return (
                   <Note noteContent={note.noteContent} noteId={note.id} key={note.id} />
                 );
               })
-            }
-          </div>
-          
+            } 
         </div>
 
         <NoteForm addNote={this.addNote} />
