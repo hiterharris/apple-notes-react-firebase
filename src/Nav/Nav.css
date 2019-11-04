@@ -1,0 +1,17 @@
+.nav {
+    display: flex;
+    justify-content: space-around;
+  }
+.nav div {
+    border: 1px solid grey;
+    padding: 2%;
+}
+.window-icons {
+    width: 10%
+  } 
+.note-icons {
+    width: 50%
+}
+.search-bar {
+    width: 40%
+}
